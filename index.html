@@ -2,49 +2,30 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FutStore</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <header>
         <h1>FutStore</h1>
-        <div id="cart">
-            🛒 Carrinho: <span id="cart-count">0</span> itens
+        <div class="cart" onclick="toggleCart()">
+            🛒 Carrinho (<span id="cart-count">0</span>)
         </div>
     </header>
 
     <main>
         <h2>Camisas Retrô</h2>
-        <div class="product-grid">
-            <div class="product">
-                <img src="/images/camisa1.jpg" alt="Camisa Brasil Retrô">
-                <h3>Camisa Brasil Retrô</h3>
-                <button onclick="addToCart('Camisa Brasil Retrô')">Adicionar</button>
-            </div>
-            <div class="product">
-                <img src="/images/camisa2.jpg" alt="Camisa Santos Retrô">
-                <h3>Camisa Santos Retrô</h3>
-                <button onclick="addToCart('Camisa Santos Retrô')">Adicionar</button>
-            </div>
-        </div>
+        <div class="products" id="shirts"></div>
 
         <h2>Chuteiras</h2>
-        <div class="product-grid">
-            <div class="product">
-                <img src="/images/chuteira1.jpg" alt="Chuteira Nike">
-                <h3>Chuteira Nike</h3>
-                <button onclick="addToCart('Chuteira Nike')">Adicionar</button>
-            </div>
-            <div class="product">
-                <img src="/images/chuteira2.jpg" alt="Chuteira F50 Adidas">
-                <h3>Chuteira F50 Adidas</h3>
-                <button onclick="addToCart('Chuteira F50 Adidas')">Adicionar</button>
-            </div>
-        </div>
-
-        <button id="checkout" onclick="checkout()">Finalizar Compra</button>
+        <div class="products" id="shoes"></div>
     </main>
+
+    <section class="cart-modal" id="cart-modal">
+        <h2>Seu Carrinho</h2>
+        <ul id="cart-items"></ul>
+        <button onclick="checkout()">Finalizar no WhatsApp</button>
+    </section>
 
     <script src="script.js"></script>
 </body>
