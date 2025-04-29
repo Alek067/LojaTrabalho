@@ -2,27 +2,32 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Responsividade -->
     <title>FutStore</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <header>
         <h1>FutStore</h1>
-        <div class="cart" onclick="toggleCart()">
+        <button class="cart" onclick="toggleCart()" aria-label="Abrir carrinho">
             🛒 Carrinho (<span id="cart-count">0</span>)
-        </div>
+        </button>
     </header>
 
     <main>
-        <h2>Camisas Retrô</h2>
-        <div class="products" id="shirts"></div>
+        <section aria-labelledby="retro-shirts">
+            <h2 id="retro-shirts">Camisas Retrô</h2>
+            <div class="products" id="shirts"></div>
+        </section>
 
-        <h2>Chuteiras</h2>
-        <div class="products" id="shoes"></div>
+        <section aria-labelledby="shoes-section">
+            <h2 id="shoes-section">Chuteiras</h2>
+            <div class="products" id="shoes"></div>
+        </section>
     </main>
 
-    <section class="cart-modal" id="cart-modal">
-        <h2>Seu Carrinho</h2>
+    <section class="cart-modal" id="cart-modal" aria-labelledby="cart-title">
+        <h2 id="cart-title">Seu Carrinho</h2>
         <ul id="cart-items"></ul>
         <button onclick="checkout()">Finalizar no WhatsApp</button>
     </section>
