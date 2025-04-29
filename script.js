@@ -4,13 +4,13 @@ const cartItems = document.getElementById('cart-items');
 const cartModal = document.getElementById('cart-modal');
 
 const shirts = [
-    { name: 'Camisa Brasil Retrô', img: 'images/camisa1.jpg' },
-    { name: 'Camisa Santos Retrô', img: 'images/camisa2.jpg' }
+    { name: 'Camisa Brasil Retrô', img: 'images/camisa1.jpg', price: 129.90 },
+    { name: 'Camisa Santos Retrô', img: 'images/camisa2.jpg', price: 119.90 }
 ];
 
 const shoes = [
-    { name: 'Chuteira Nike', img: 'images/chuteira1.jpg' },
-    { name: 'Chuteira F50 Adidas', img: 'images/chuteira2.jpg' }
+    { name: 'Chuteira Nike', img: 'images/chuteira1.jpg', price: 399.90 },
+    { name: 'Chuteira F50 Adidas', img: 'images/chuteira2.jpg', price: 359.90 }
 ];
 
 function renderProducts(products, containerId) {
@@ -21,21 +21,25 @@ function renderProducts(products, containerId) {
         div.innerHTML = `
             <img src="${product.img}" alt="${product.name}">
             <h3>${product.name}</h3>
-            <button onclick="addToCart('${product.name}')">Adicionar</button>
+            <p class="price">R$ ${product.price.toFixed(2)}</p>
+            <button onclick="addToCart('${product.name}', ${product.price})">Adicionar</button>
         `;
         container.appendChild(div);
     });
 }
 
-function addToCart(productName) {
-    cart[productName] = (cart[productName] || 0) + 1;
+function addToCart(productName, price = 0) {
+    if (!cart[productName]) {
+        cart[productName] = { qty: 0, price };
+    }
+    cart[productName].qty += 1;
     updateCart();
 }
 
 function removeFromCart(productName) {
     if (cart[productName]) {
-        cart[productName]--;
-        if (cart[productName] === 0) delete cart[productName];
+        cart[productName].qty--;
+        if (cart[productName].qty === 0) delete cart[productName];
         updateCart();
     }
 }
@@ -43,18 +47,22 @@ function removeFromCart(productName) {
 function updateCart() {
     cartItems.innerHTML = '';
     let totalItems = 0;
+    let totalPrice = 0;
 
-    for (const [name, qty] of Object.entries(cart)) {
-        totalItems += qty;
+    for (const [name, data] of Object.entries(cart)) {
+        totalItems += data.qty;
+        totalPrice += data.qty * data.price;
+
         const li = document.createElement('li');
         li.innerHTML = `
-            ${name} - ${qty} 
-            <button onclick="addToCart('${name}')">+</button>
+            ${name} - ${data.qty}x (R$ ${(data.price).toFixed(2)})
+            <button onclick="addToCart('${name}', ${data.price})">+</button>
             <button onclick="removeFromCart('${name}')">−</button>
         `;
         cartItems.appendChild(li);
     }
 
+    cartItems.innerHTML += `<hr><strong>Total: R$ ${totalPrice.toFixed(2)}</strong>`;
     cartCount.innerText = totalItems;
 }
 
@@ -65,8 +73,8 @@ function checkout() {
     }
 
     let message = 'Olá! Gostaria de comprar:\n';
-    for (const [name, qty] of Object.entries(cart)) {
-        message += `- ${name} (x${qty})\n`;
+    for (const [name, data] of Object.entries(cart)) {
+        message += `- ${name} (x${data.qty}) - R$ ${(data.qty * data.price).toFixed(2)}\n`;
     }
 
     const encodedMessage = encodeURIComponent(message);

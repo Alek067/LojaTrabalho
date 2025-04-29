@@ -39,6 +39,11 @@ main {
     border-radius: 10px;
     padding: 1rem;
     text-align: center;
+    transition: transform 0.2s;
+}
+
+.product:hover {
+    transform: scale(1.02);
 }
 
 .product img {
@@ -56,6 +61,7 @@ button {
     padding: 10px;
     border-radius: 5px;
     cursor: pointer;
+    width: 100%;
 }
 
 button:hover {
@@ -78,5 +84,12 @@ button:hover {
 }
 
 .cart-modal li {
+    margin: 0.5rem 0;
+}
+
+.price {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #0074D9;
     margin: 0.5rem 0;
 }
